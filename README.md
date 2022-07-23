@@ -22,12 +22,12 @@ p.setJointMotorControlArray(
 | joint1 | 11 | 机械臂的基座，可以控制机械臂左右转动 | 将targetVelocities和forces设置为5左右，机械臂会向左转，右转则建议将targetVelocities设置为-5左右 |
 | joint2 | 12 | 机械臂和基座连接第一个关节，可以控制机械臂上下移动| 将targetVelocities和forces设置为5左右，机械臂会向下移动， 将targetVelocities设置为-5左右，机械臂向上移动|
 | joint3 | 13 | 机械臂第一个手臂和第二个手臂的连接关节，可以控制机械臂上下移动| 同上 |
-| joint4 | 14 | 机械臂第二个手臂和钳子的连接关节，可以控制钳子上下移动| 同上 |
-| gripper | 15 | 机械臂左钳子| 将targetVelocities和forces设置为5左右就会张开，将targetVelocities设置成-5则会闭合|
-| gripper_sub | 16 | 机械臂左钳子| 同上|
+| joint4 | 14 | 机械臂第二个手臂和抓手的连接关节，可以控制抓手上下移动| 同上 |
+| gripper | 15 | 机械臂左抓手| 将targetVelocities和forces设置为5左右就会张开，将targetVelocities设置成-5则会闭合|
+| gripper_sub | 16 | 机械臂左抓手| 同上|
 
 ## Example
-这是一个控制机械臂钳子开合的例子，基于此可以设计机器人可以做的动作进行强化学习实验。
+这是一个控制机械臂抓手开合的例子，基于此可以设计机器人可以做的动作进行强化学习实验。
 ```python
 import pybullet as p
 import pybullet_data  # pybullet自带的一些模型
