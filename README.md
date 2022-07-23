@@ -25,3 +25,43 @@ p.setJointMotorControlArray(
 | joint4 | 14 | 机械臂第二个手臂和钳子的连接关节，可以控制钳子上下移动| 同上 |
 | gripper | 15 | 机械臂左钳子| 将targetVelocities和forces设置为5左右就会张开，将targetVelocities设置成-5则会闭合|
 | gripper_sub | 16 | 机械臂左钳子| 同上|
+
+## Example
+这是一个控制机械臂钳子开合的例子，基于此可以设计机器人可以做的动作进行强化学习实验。
+```python
+import pybullet as p
+import pybullet_data  # pybullet自带的一些模型
+import time
+server_id = p.connect(p.GUI)  # 连接到仿真环境，p.DIREACT是不显示仿真界面,p.GUI则为显示仿真界面
+p.setGravity(0, 0, -10)  # 设定重力
+startPos = [0, 0, 0]
+startOrientation = p.getQuaternionFromEuler([0, 0, 0])
+p.setAdditionalSearchPath(pybullet_data.getDataPath())  # 添加pybullet的额外数据地址，使程序可以直接调用到内部的一些模型
+planeId = p.loadURDF("plane.urdf")
+robot_id = p.loadURDF("./urdf/model.urdf")
+p.resetBasePositionAndOrientation(robot_id, startPos, startOrientation)
+joint_num = p.getNumJoints(robot_id)
+print("turtlebot3节点数量为：", joint_num)
+available_joints_indexes = [i for i in range(p.getNumJoints(robot_id)) if p.getJointInfo(robot_id, i)[2] != p.JOINT_FIXED]
+print([p.getJointInfo(robot_id, i)[1] for i in available_joints_indexes])
+print(available_joints_indexes)
+wheel_joints_indexes = [i for i in available_joints_indexes if "wheel" in str(p.getJointInfo(robot_id, i)[1])]
+print(wheel_joints_indexes)
+p.configureDebugVisualizer(p.COV_ENABLE_RENDERING, 1)
+p.setRealTimeSimulation(0)
+target_v =  -5             # 电机达到的预定角速度（rad/s）
+max_force = 5
+for i in range(100000):
+    if i % 100 == 0:
+        target_v = -5 if i % 200 == 0 else 5
+    p.stepSimulation()
+    p.setJointMotorControlArray(
+        bodyUniqueId=robot_id,
+        jointIndices=[15, 16], #控制机械臂钳子
+        controlMode=p.VELOCITY_CONTROL,
+        targetVelocities=[target_v, target_v],
+        forces=[max_force, max_force]
+    )
+    time.sleep(1 / 240)         # 模拟器一秒模拟迭代240步
+p.disconnect(server_id)
+```
