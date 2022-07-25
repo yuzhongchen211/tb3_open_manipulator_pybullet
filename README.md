@@ -65,3 +65,11 @@ for i in range(100000):
     time.sleep(1 / 240)         # 模拟器一秒模拟迭代240步
 p.disconnect(server_id)
 ```
+## Keyboard_Control_Robot
+我写了一个简单的控制机器人动作的程序，目前可以使用的是：
+- 上下左右箭头来控制机器人移动，目前也支持左上右上，左下右下
+- a和d控制机器人Joint1机械臂左转右转
+- f和h控制机器人Joint2机械臂关节上下移动
+- j和k控制机器人Joint3机械臂关节上下移动
+- m和n控制机器人Joint4机械臂关节上下移动
+- o和c控制机械臂抓手的开关，o是open就是打开抓手，c是close就是关闭抓手
