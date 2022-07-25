@@ -66,7 +66,7 @@ for i in range(100000):
 p.disconnect(server_id)
 ```
 ## Keyboard_Control_Robot
-我写了一个简单的控制机器人动作的程序，目前可以使用的是：
+我写了一个简单的控制机器人动作的程序，运行`python keyboard_control_demo.py`即可，目前可以使用的是：
 - 上下左右箭头来控制机器人移动，目前也支持左上右上，左下右下
 - a和d控制机器人Joint1机械臂左转右转
 - f和h控制机器人Joint2机械臂关节上下移动
